@@ -1,15 +1,7 @@
-import './App.css';
-import bootstrap from '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import Navbar from './Components/Navbar';
-import Homescreen from './screens/Homescreen';
+import Layout from "./components/Layout/Layout";
+
 function App() {
-  return (
-    <div className="App">
-      <Navbar/>
-      <Homescreen/>
-    </div>
-  );
+  return <Layout />;
 }
 
 export default App;
-

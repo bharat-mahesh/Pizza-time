@@ -1,0 +1,58 @@
+.footer {
+  padding-top: 50px;
+  padding-bottom: 30px;
+  background: #5aedc1;
+}
+
+.footer__logo img {
+  width: calc(100% - 80%);
+  margin-bottom: 10px;
+}
+
+.footer__logo h5 {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+
+.footer__logo p {
+  font-size: 0.9rem;
+  color: #333;
+  line-height: 28px;
+}
+
+.delivery__time-item {
+  background: transparent !important;
+}
+
+.delivery__time-item span {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #212245;
+}
+
+.delivery__time-item p {
+  color: #212245;
+}
+.footer__title {
+  font-size: 1.1rem;
+  color: #212245;
+  font-weight: 600;
+}
+
+@media only screen and (max-width: 768px) {
+  .footer__title {
+    font-size: 0.8rem;
+  }
+
+  .delivery__time-item span {
+    font-size: 0.8rem;
+  }
+
+  .delivery__time-item p {
+    font-size: 0.7rem;
+    margin-bottom: 0;
+  }
+}
+
+
