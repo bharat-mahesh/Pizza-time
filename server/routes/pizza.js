@@ -1,46 +1,66 @@
 const express = require('express');
 const router=express.Router()
 const Pizza=require('../models/pizza')
+const menuController=require('../controllers/menuController')
+const multer=require('multer')
+const { S3Client } = require('@aws-sdk/client-s3');
+const multers3 = require('multer-s3');
+require('dotenv').config()
 
+const s3=new S3Client({
+    region: process.env.REGION,
+  credentials: {
+    accessKeyId: process.env.ACCESS_KEY,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY,
+  },
+  sslEnabled: false,
+  s3ForcePathStyle: true,
+  signatureVersion: 'v4',
 
-router.get('/', async (req,res)=>{
-    
-    try {
-        const pizzas = await Pizza.find({}).select('description name photoUrl')
-        res.json(pizzas)
-
-    } catch (error) {
-        res.send(error).status(500)
-    }
 })
 
-router.get('/:id',getPizza,async(req,res)=>{
-    card={
-        name:res.pizza.name,
-        description:res.pizza.description,
-        prices:res.pizza.prices
-    }
-    res.json(card)
-})
 
-router.post('/',async(req,res)=>{
-    const pizza = new Pizza({
-        name:req.body.name,
-        varients:req.body.varients,
-        prices:req.body.prices,
-        category:req.body.category,
-        photoUrl:req.body.photoUrl,
-        description:req.body.description
+const upload=multer({
+        storage:multers3({
+            s3:s3,
+            bucket:"pizzatime-mernlab",
+            metadata:function (req, file, cb) {
+                cb(null, {fieldName: file.fieldname});
+              },
+            key:function (req, file, cb) {
+                cb(null, 'image.jpg')
+              }
+        })
     })
-    try {
+
+
+router.get('/', menuController().index)
+    
+router.get('/:id',getPizza,menuController().pizzadeets)
+
+router.post('/',upload.single('image'),async (req,res)=>{
+   
+    
+    const pizza = new Pizza({
+                name:req.body.name,
+                varients:req.body.varients,
+                prices:req.body.prices,
+                category:req.body.category,
+                description:req.body.description,
+                image:req.file.location
+            })
+            try {
+                
+                const newpizza= await pizza.save()
+                res.json(newpizza)
         
-        const newpizza= await pizza.save()
-        res.json(newpizza)
-
-    } catch (error) {
-        res.send(error)
-    }
-
+            } catch (error) {
+                res.send(error)
+            }
+    
+    
+    
+    
 })
 
 async function getPizza(req,res,next){

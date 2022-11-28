@@ -15,7 +15,7 @@ app.use(express.json())
 
 const pizza=require('./routes/pizza')
 
-app.use("/menu",pizza)
+app.use("/",pizza)
 
 app.listen(5000,()=>{
     console.log("Listening on 5000");

@@ -16,12 +16,12 @@ prices:[
 category:{
     type:String
 },
-photoUrl: {
-    type:String
-},
 description:{
     type:String
 },
+image:{
+    type:String
+}
 })
 
 module.exports = mongoose.model('Pizza',pizzaSchema)
