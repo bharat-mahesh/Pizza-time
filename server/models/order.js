@@ -13,12 +13,12 @@ address:{
 postalCode:{
     type:String
 },
-pizzName:{
-    type:String
-},
-quantity:{
-    type:Number
-},
+
+pizza: [{
+    pizzaName: String,
+    quantity: Number
+}],
+
 status:{
     type:String
 }
