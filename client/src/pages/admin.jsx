@@ -15,7 +15,7 @@ const Admin = () => {
     useEffect(() => {
 
       async function fetchData(){
-
+          console.log("dbdb");
           return await axios.get('http://localhost:5000/kitchen').then(res=>{
             console.log(res.data);
             setData(res.data)
@@ -29,13 +29,13 @@ const Admin = () => {
     }, [])
 
     const onChangeOpt = async (e,id) =>{
-        setOpt(e.target.value)
         const body = {
-          status: Opt
+            status: e.target.value
         }
-        
-        console.log(Opt);
-        await axios.patch(`http://localhost:5000/kitchen/${id}`, body);
+        await axios.patch(`http://localhost:5000/kitchen/${id}`, body).then(() => {
+          setOpt(e.target.value)
+        });
+        window.location.reload(false);
     }
 
     const orders = Data.map((data,id)=>{
