@@ -31,9 +31,11 @@ const Admin = () => {
     const onChangeOpt = async (e,id) =>{
         setOpt(e.target.value)
         const body = {
-            status: Opt
+          status: Opt
         }
-        await axios.put(`http://localhost:5000/admin/kitchen/${id}`, body);
+        
+        console.log(Opt);
+        await axios.patch(`http://localhost:5000/kitchen/${id}`, body);
     }
 
     const orders = Data.map((data,id)=>{
