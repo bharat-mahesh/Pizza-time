@@ -14,8 +14,13 @@ db.once('open',()=>(console.log("Succesful")))
 app.use(express.json())
 
 const pizza=require('./routes/pizza')
+const order=require('./routes/checkout')
+const kitchen=require('./routes/kitchen')
 
-app.use("/",pizza)
+app.use("/menu",pizza)
+app.use("/checkout",order)
+app.use("/kitchen",kitchen)
+
 
 app.listen(5000,()=>{
     console.log("Listening on 5000");
