@@ -28,7 +28,7 @@ const upload=multer({
                 cb(null, {fieldName: file.fieldname});
               },
             key:function (req, file, cb) {
-                cb(null, 'image.jpg')
+                cb(null, Date.now().toString())
               }
         })
     })
@@ -43,10 +43,7 @@ router.post('/',upload.single('image'),async (req,res)=>{
     
     const pizza = new Pizza({
                 name:req.body.name,
-                varients:req.body.varients,
                 prices:req.body.prices,
-                category:req.body.category,
-                description:req.body.description,
                 image:req.file.location
             })
             try {

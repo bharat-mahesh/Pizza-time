@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/common-section/CommonSection";
-
+import axios from "axios";
 import { Container, Row, Col } from "reactstrap";
 
 import products from "../assets/fake-data/products";
@@ -11,16 +11,31 @@ import ReactPaginate from "react-paginate";
 import "../styles/all-foods.css";
 import "../styles/pagination.css";
 
+
 const AllFoods = () => {
+  const [Data, setData] = useState([]);
+  useEffect(() => {
+  
+    async function fetchData(){
+        return await axios.get('http://localhost:5000/menu').then(res=>{
+          console.log(res.data);
+          setData(res.data)
+        }).catch(err=>{
+          console.log(err);
+      })
+  
+    }
+    fetchData();
+  }, [])
   const [searchTerm, setSearchTerm] = useState("");
 
   const [pageNumber, setPageNumber] = useState(0);
 
-  const searchedProduct = products.filter((item) => {
+  const searchedProduct = Data.filter((item) => {
     if (searchTerm.value === "") {
       return item;
     }
-    if (item.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+    if (item.name.toLowerCase().includes(searchTerm.toLowerCase())) {
       return item;
     } else {
       return console.log("not found");
@@ -49,7 +64,7 @@ const AllFoods = () => {
           <Row>
 
             {displayPage.map((item) => (
-              <Col lg="3" md="4" sm="6" xs="6" key={item.id} className="mb-4">
+              <Col lg="3" md="4" sm="6" xs="6" key={item.__id} className="mb-4">
                 <ProductCard item={item} />
               </Col>
             ))}

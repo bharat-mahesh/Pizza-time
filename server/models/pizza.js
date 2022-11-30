@@ -4,21 +4,10 @@ const pizzaSchema=mongoose.Schema({
 name:{
     type:String
 },
-varients:[],
-prices:[
-    {
-        small: Number,
-        medium:Number,
-        large:Number
-    }
-],
+prices:{
+    type:Number
+},
 
-category:{
-    type:String
-},
-description:{
-    type:String
-},
 image:{
     type:String
 }

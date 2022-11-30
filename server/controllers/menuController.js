@@ -3,7 +3,7 @@ const Pizza=require('../models/pizza')
 function menuController(){
     return{
         async index(req,res){
-            const pizzas = await Pizza.find({}).select('description name image')
+            const pizzas = await Pizza.find({})
             try {
                 res.json(pizzas)
                 
@@ -16,7 +16,7 @@ function menuController(){
             try {
                 card={
                     name:res.pizza.name,
-                    description:res.pizza.description,
+                   
                     prices:res.pizza.prices
                 }
                 res.json(card)
