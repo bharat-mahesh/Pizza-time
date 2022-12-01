@@ -9,13 +9,13 @@ import { cartActions } from "../../../store/shopping-cart/cartSlice";
 
 const ProductCard = (props) => {
   console.log(props.item);
-  const { __id, name, image, prices } = props.item;
+  const { _id, name, image, prices } = props.item;
   const dispatch = useDispatch();
 
   const addToCart = () => {
     dispatch(
       cartActions.addItem({
-        __id,
+        _id,
         name,
         image,
         prices,

@@ -34,9 +34,10 @@ const cartSlice = createSlice({
   reducers: {
     // =========== add item ============
     addItem(state, action) {
+      console.log(action)
       const newItem = action.payload;
       const existingItem = state.cartItems.find(
-        (item) => item.id === newItem.id
+        (item) => item._id === newItem._id,
       );
       state.totalQuantity++;
 
@@ -44,21 +45,21 @@ const cartSlice = createSlice({
         // ===== note: if you use just redux you should not mute state array instead of clone the state array, but if you use redux toolkit that will not a problem because redux toolkit clone the array behind the scene
 
         state.cartItems.push({
-          id: newItem.id,
-          title: newItem.title,
-          image01: newItem.image01,
-          price: newItem.price,
+          _id: newItem._id,
+          name: newItem.name,
+          image: newItem.image,
+          prices: newItem.prices,
           quantity: 1,
-          totalPrice: newItem.price,
+          totalPrice: newItem.prices,
         });
       } else {
         existingItem.quantity++;
         existingItem.totalPrice =
-          Number(existingItem.totalPrice) + Number(newItem.price);
+          Number(existingItem.totalPrice) + Number(newItem.prices);
       }
 
       state.totalAmount = state.cartItems.reduce(
-        (total, item) => total + Number(item.price) * Number(item.quantity),
+        (total, item) => total + Number(item.prices) * Number(item.quantity),
 
         0
       );
@@ -73,20 +74,20 @@ const cartSlice = createSlice({
     // ========= remove item ========
 
     removeItem(state, action) {
-      const id = action.payload;
-      const existingItem = state.cartItems.find((item) => item.id === id);
+      const _id = action.payload;
+      const existingItem = state.cartItems.find((item) => item._id === _id);
       state.totalQuantity--;
 
       if (existingItem.quantity === 1) {
-        state.cartItems = state.cartItems.filter((item) => item.id !== id);
+        state.cartItems = state.cartItems.filter((item) => item._id !== _id);
       } else {
         existingItem.quantity--;
         existingItem.totalPrice =
-          Number(existingItem.totalPrice) - Number(existingItem.price);
+          Number(existingItem.totalPrice) - Number(existingItem.prices);
       }
 
       state.totalAmount = state.cartItems.reduce(
-        (total, item) => total + Number(item.price) * Number(item.quantity),
+        (total, item) => total + Number(item.prices) * Number(item.quantity),
         0
       );
 
@@ -100,16 +101,16 @@ const cartSlice = createSlice({
     //============ delete item ===========
 
     deleteItem(state, action) {
-      const id = action.payload;
-      const existingItem = state.cartItems.find((item) => item.id === id);
+      const _id = action.payload;
+      const existingItem = state.cartItems.find((item) => item._id === _id);
 
       if (existingItem) {
-        state.cartItems = state.cartItems.filter((item) => item.id !== id);
+        state.cartItems = state.cartItems.filter((item) => item._id !== _id);
         state.totalQuantity = state.totalQuantity - existingItem.quantity;
       }
 
       state.totalAmount = state.cartItems.reduce(
-        (total, item) => total + Number(item.price) * Number(item.quantity),
+        (total, item) => total + Number(item.prices) * Number(item.quantity),
         0
       );
       setItemFunc(

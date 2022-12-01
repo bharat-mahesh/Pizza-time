@@ -33,7 +33,8 @@ const Cart = () => {
                   </thead>
                   <tbody>
                     {cartItems.map((item) => (
-                      <Tr item={item} key={item.id} />
+                      console.log(item),
+                      <Tr item={item} key={item._id} />
                     ))}
                   </tbody>
                 </table>
@@ -63,19 +64,19 @@ const Cart = () => {
 };
 
 const Tr = (props) => {
-  const { id, image01, title, price, quantity } = props.item;
+  const { _id, image, name, prices, quantity } = props.item;
   const dispatch = useDispatch();
 
   const deleteItem = () => {
-    dispatch(cartActions.deleteItem(id));
+    dispatch(cartActions.deleteItem(_id));
   };
   return (
     <tr>
       <td className="text-center cart__img-box">
-        <img src={image01} alt="" />
+        <img src={image} alt="" />
       </td>
-      <td className="text-center">{title}</td>
-      <td className="text-center">Rs.{price}</td>
+      <td className="text-center">{name}</td>
+      <td className="text-center">Rs.{prices}</td>
       <td className="text-center">{quantity}px</td>
       <td className="text-center cart__item-del">
         <i class="ri-delete-bin-line" onClick={deleteItem}></i>
