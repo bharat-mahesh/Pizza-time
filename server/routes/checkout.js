@@ -10,8 +10,8 @@ router.post('/',async (req,res)=>{
                 phone:req.body.phone,
                 address:req.body.address,
                 postalCode:req.body.postalCode,
-                pizzaName:req.body.pizzaName,
-                quantity:req.body.quantity,
+                pizza:req.body.pizza,
+                billAmount:req.body.billAmount,
                 status:"unconfirmed"
             })
             try {

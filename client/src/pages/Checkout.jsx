@@ -5,31 +5,48 @@ import CommonSection from "../components/UI/common-section/CommonSection";
 import Helmet from "../components/Helmet/Helmet";
 
 import "../styles/checkout.css";
+import axios from "axios";
 
 const Checkout = () => {
   const [enterName, setEnterName] = useState("");
   const [enterNumber, setEnterNumber] = useState("");
   const [enterAddress, setEnterAddress] = useState("");
   const [postalCode, setPostalCode] = useState("");
-
   const shippingInfo = [];
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const cartItems = useSelector((state) => state.cart.cartItems);
   const shippingCost = 0;
-
+  
+  
+  const pizzas=[]
+  
+  for(let i =0;i<cartItems.length;i++){
+    
+    pizzas.push({
+      "pizzaName":cartItems[i].name,
+      "quantity":cartItems[i].quantity
+    })
+  
+  
+  }
+  
+  
+  const [pizzainfo,setPizzaInfo]=useState(pizzas)
   const totalAmount = cartTotalAmount + Number(shippingCost);
-
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     const userShippingAddress = {
       name: enterName,
       phone: enterNumber,
       address: enterAddress,
       postalCode: postalCode,
+      pizza:pizzainfo,
+      billAmount:totalAmount
     };
 
-    shippingInfo.push(userShippingAddress);
-    console.log(shippingInfo);
+    await axios.post("http://localhost:5000/checkout",userShippingAddress).then(()=>{
+      console.log(cartItems);
+    })
   };
 
   return (

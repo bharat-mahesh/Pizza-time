@@ -28,6 +28,15 @@ function kitchenController(){
             } catch (error) {
                 res.json(error)
             }
+        },
+        async orderstatus(req,res){
+            try {
+                
+                res.json(res.order.status)
+
+            } catch (error) {
+                res.json(error)
+            }
         }
     }
 

@@ -16,10 +16,12 @@ app.use(express.json())
 const pizza=require('./routes/pizza')
 const order=require('./routes/checkout')
 const kitchen=require('./routes/kitchen')
+const status=require('./routes/status')
 
 app.use("/menu",pizza)
 app.use("/checkout",order)
 app.use("/kitchen",kitchen)
+app.use("/status",status)
 
 
 app.listen(5000,()=>{

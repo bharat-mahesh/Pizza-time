@@ -18,7 +18,9 @@ pizza: [{
     pizzaName: String,
     quantity: Number
 }],
-
+billAmount:{
+    type:Number
+},
 status:{
     type:String
 }
