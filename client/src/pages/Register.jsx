@@ -1,16 +1,31 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/common-section/CommonSection";
 import { Container, Row, Col } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
+
 
 const Register = () => {
-  const signupNameRef = useRef();
-  const signupPasswordRef = useRef();
-  const signupEmailRef = useRef();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const submitHandler = (e) => {
+  const navigate = useNavigate();
+
+  const submitHandler = async (e) => {
     e.preventDefault();
+
+    await axios.post("http://localhost:5000/user/create", {
+      email: email,
+      password: password,
+    }).then((msg) => {
+      console.log(msg);
+      navigate('/login');
+    }).catch((error) => {
+      alert("Email already exists")
+    })
   };
 
   return (
@@ -26,7 +41,8 @@ const Register = () => {
                     type="text"
                     placeholder="Full name"
                     required
-                    ref={signupNameRef}
+                    value={name}
+                    onChange={e => setName(e.target.value)}
                   />
                 </div>
                 <div className="form__group">
@@ -34,7 +50,8 @@ const Register = () => {
                     type="email"
                     placeholder="Email"
                     required
-                    ref={signupEmailRef}
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
                   />
                 </div>
                 <div className="form__group">
@@ -42,7 +59,8 @@ const Register = () => {
                     type="password"
                     placeholder="Password"
                     required
-                    ref={signupPasswordRef}
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
                   />
                 </div>
                 <button type="submit" className="addTOCart__btn">
