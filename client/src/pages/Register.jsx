@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Register = () => {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -36,15 +35,7 @@ const Register = () => {
           <Row>
             <Col lg="6" md="6" sm="12" className="m-auto text-center">
               <form className="form mb-5" onSubmit={submitHandler}>
-                <div className="form__group">
-                  <input
-                    type="text"
-                    placeholder="Full name"
-                    required
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                  />
-                </div>
+           
                 <div className="form__group">
                   <input
                     type="email"
