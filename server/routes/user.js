@@ -1,8 +1,12 @@
 const express = require('express')
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 
 const users = require('../models/user')
 
+const generateToken = (id) => {
+    return jwt.sign({ id }, "secret-key", {expiresIn: "30d"});
+};
 
 router.route('/create').post(async (req,res)=>{
     const password = req.body.password;
@@ -20,25 +24,14 @@ router.route('/create').post(async (req,res)=>{
 router.route('/login').post(async (req, res) => {
     const email = req.body.email
     const password = req.body.password
-    let sess = req.session;
     const user = await users.findOne({email: email, password:password});
     if (user){
-        sess.email = email;
-        res.send("logged in")
+        res.json({_id: user._id, email: user.email, password: user.password, token: generateToken(user._id)});
     }
     else{
         res.status(400).json({message: "Incorrect email or password"});
     }
     
-})
-
-router.route('/current').get((req, res) => {
-    res.send(req.session.email);
-})
-
-router.route('/logout').get((req, res) => {
-    req.session.destroy();
-    res.send("logout success!");
 })
 
 module.exports = router;
