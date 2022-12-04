@@ -33,8 +33,8 @@ const Admin = () => {
             status: e.target.value
         }
         await axios.patch(`http://localhost:5000/kitchen/${id}`, body).then(() => {
-          setOpt(e.target.value)
-        });
+          setOpt(e.target.value)  
+        })
         window.location.reload(false);
     }
 
@@ -56,6 +56,7 @@ const Admin = () => {
           <Form.Select aria-label="Default select example" value={data.status} onChange={(event) => onChangeOpt(event, data._id)}>
             <option value="placed">placed</option>
             <option value="confirmed">confirmed</option>
+            <option value="outfordelivery">out for delivery</option>
             <option value="delivered">delivered</option>
           </Form.Select>
           </td>
