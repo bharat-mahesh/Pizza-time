@@ -1,16 +1,18 @@
-import React from "react";
-
-import CommonSection from "../components/UI/common-section/CommonSection";
-import Helmet from "../components/Helmet/Helmet";
-import "../styles/cart-page.css";
-import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col } from "reactstrap";
 import { cartActions } from "../store/shopping-cart/cartSlice";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalAmount = useSelector((state) => state.cart.totalAmount);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    if (localStorage.getItem("user") !== null){
+      setIsLoggedIn(true)
+    }
+  })
   return (
     <Helmet title="Cart">
       <CommonSection title="Your Cart" />
@@ -51,7 +53,8 @@ const Cart = () => {
                     <Link to="/foods">Continue Shopping</Link>
                   </button>
                   <button className="addTOCart__btn">
-                    <Link to="/checkout">Proceed to checkout</Link>
+                    {isLoggedIn && (<Link to="/checkout">Proceed to checkout</Link>)}
+                    {!isLoggedIn && (<Link to="/login">Proceed to checkout</Link>)}
                   </button>
                 </div>
               </div>
@@ -70,6 +73,7 @@ const Tr = (props) => {
   const deleteItem = () => {
     dispatch(cartActions.deleteItem(_id));
   };
+
   return (
     <tr>
       <td className="text-center cart__img-box">
@@ -86,3 +90,4 @@ const Tr = (props) => {
 };
 
 export default Cart;
+
