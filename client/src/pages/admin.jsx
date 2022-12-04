@@ -3,6 +3,8 @@ import axios from 'axios'
 import Table from 'react-bootstrap/Table'
 import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.css'
+import { BsFillTrashFill } from "react-icons/bs";
+
 
 import Helmet from "../components/Helmet/Helmet";
 
@@ -11,6 +13,7 @@ const Admin = () => {
 
     const [Data, setData] = useState([]);
     const [Opt, setOpt] = useState("");
+    const [del, setDel] = useState("");
 
     useEffect(() => {
 
@@ -38,6 +41,11 @@ const Admin = () => {
         window.location.reload(false);
     }
 
+    const DeleteOrder = async (id) => {
+      await axios.delete(`http://localhost:5000/kitchen/${id}`);
+      window.location.reload(false)
+    }
+
     const orders = Data.map((data,id)=>{
         return <tr key={id}>
           <td>{data.name}</td>
@@ -60,6 +68,7 @@ const Admin = () => {
             <option value="delivered">delivered</option>
           </Form.Select>
           </td>
+          <td><BsFillTrashFill onClick={() => DeleteOrder(data._id)}/></td>
         </tr>
       })
 
@@ -80,6 +89,7 @@ const Admin = () => {
                     <th scope="col">Postal Code</th>
                     <th scope="col">Orders</th>
                     <th scope="col">Status</th>
+                    <th scope="col">Delete</th>
                 </tr>
             </thead>
           <tbody>{ orders }</tbody>
