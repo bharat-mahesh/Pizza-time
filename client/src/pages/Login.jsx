@@ -30,7 +30,8 @@ const Login = () => {
 
     if (data) {
       localStorage.setItem("user", JSON.stringify(data));
-      navigate("/home");
+      window.location.reload(false);
+      window.location = "/"
     }
 
   };
