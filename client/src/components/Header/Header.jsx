@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 import { Container } from "reactstrap";
 import logo from "../../assets/images/res-logo.png";
@@ -22,10 +22,6 @@ const nav__links = [
     display: "Cart",
     path: "/cart",
   },
-  {
-    display: "Contact",
-    path: "/contact",
-  },
 ];
 
 const Header = () => {
@@ -34,13 +30,22 @@ const Header = () => {
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
   const dispatch = useDispatch();
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const toggleMenu = () => menuRef.current.classList.toggle("show__menu");
 
   const toggleCart = () => {
     dispatch(cartUiActions.toggle());
   };
 
+
   useEffect(() => {
+    if (localStorage.getItem("user") !== null){
+      setIsLoggedIn(true);
+    }
+    else{
+      setIsLoggedIn(false);
+    }
     window.addEventListener("scroll", () => {
       if (
         document.body.scrollTop > 80 ||
@@ -54,6 +59,12 @@ const Header = () => {
 
     return () => window.removeEventListener("scroll");
   }, []);
+
+  const Logout = () => {
+    localStorage.removeItem("user");
+    setIsLoggedIn(false);
+    window.location = "/home"
+  }
 
   return (
     <header className="header" ref={headerRef}>
@@ -89,9 +100,8 @@ const Header = () => {
             </span>
 
             <span className="user">
-              <Link to="/login">
-              <i class="ri-user-3-fill"></i>
-              </Link>
+              {isLoggedIn && (<Link to="#" onClick={Logout}>Logout</Link>)}
+              {!isLoggedIn && (<Link to="/login"><i class="ri-user-3-fill"></i></Link>)}
             </span>
 
             <span className="mobile__menu" onClick={toggleMenu}>
