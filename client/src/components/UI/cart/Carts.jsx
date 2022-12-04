@@ -18,7 +18,7 @@ const Carts = () => {
 
   useEffect(() => {
     if (localStorage.getItem("user") !== null){
-      setIsLoggedIn(false);
+      setIsLoggedIn(true);
     }
   })
 
