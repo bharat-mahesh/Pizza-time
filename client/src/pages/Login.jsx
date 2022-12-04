@@ -15,16 +15,24 @@ const Login = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("shshhhdjfjj");
-    await axios.post('http://localhost:5000/user/login', {
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+    const body = {
       email: email,
       password: password
-    }).then((msg) => {
-      console.log(msg)
+    }
+
+    const { data } = await axios.post('http://localhost:5000/user/login', body , config);
+
+    if (data) {
+      localStorage.setItem("user", JSON.stringify(data));
       navigate("/home");
-    }).catch((error) => {
-      alert("Incorrect email or password");
-    })
+    }
+
   };
 
   return (
