@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 
 import { ListGroup } from "reactstrap";
 import { Link } from "react-router-dom";
@@ -8,11 +8,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { cartUiActions } from "../../../store/shopping-cart/cartUiSlice";
 
 import "../../../styles/shopping-cart.css";
+import { useEffect } from "react";
 
 const Carts = () => {
   const dispatch = useDispatch();
   const cartProducts = useSelector((state) => state.cart.cartItems);
   const totalAmount = useSelector((state) => state.cart.totalAmount);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("user") !== null){
+      setIsLoggedIn(false);
+    }
+  })
+
+
   const toggleCart = () => {
     dispatch(cartUiActions.toggle());
   };
@@ -40,9 +50,8 @@ const Carts = () => {
             Subtotal : <span>Rs.{totalAmount}</span>
           </h6>
           <button>
-            <Link to="/checkout" onClick={toggleCart}>
-              Checkout
-            </Link>
+            {isLoggedIn && (<Link to="/checkout" onClick={toggleCart}>Checkout</Link>)}
+            {!isLoggedIn && (<Link to="/login" onClick={toggleCart}>Checkout</Link>)}
           </button>
         </div>
       </ListGroup>
