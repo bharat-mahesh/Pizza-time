@@ -6,7 +6,7 @@ const app=express()
 app.use(cors())
 const mongoose = require('mongoose');
 
-mongoose.connect("mongodb+srv://mern:mern@cluster0.bpzfu3z.mongodb.net/test",{useNewUrlParser: true})
+mongoose.connect(process.env.DATABASE_URI,{useNewUrlParser: true})
 db=mongoose.connection
 
 db.on('error',(error)=>(console.log(error)))

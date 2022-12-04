@@ -42,7 +42,7 @@ const AllFoods = () => {
     }
   });
 
-  const productPerPage = 6;
+  const productPerPage = 4;
   const visitedPage = pageNumber * productPerPage;
   const displayPage = searchedProduct.slice(
     visitedPage,
