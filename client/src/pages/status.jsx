@@ -7,18 +7,35 @@ const Status=()=>{
     const {id} = useParams()
 
     const[status,setStatus]=useState("unconfirmed")
-    useEffect(()=>{
+    const [msg, setMsg] = useState("")
+    useEffect(async ()=>{
 
        async function fetchdata(){
         const data=await axios.get(`http://localhost:5000/status/${id}`)
-        // console.log(data.data)
         setStatus(data.data)
+        return data.data
+        
+        
     }
-       fetchdata()
+       const data = await fetchdata()
+       console.log(data)
+       if (data == "confirmed"){
+         setMsg("Order has been confirmed")
+        }
+        else if (data== "outfordelivery"){
+         setMsg("Food is on the way")
+        }
+        else if (data == "delivered"){
+         setMsg("Enjoy your meal")
+        }
+        else{
+         setMsg("Waiting for confirmation")
+        }
     },[])
+
     return(
     <div>
-       Order status:{status}
+       {msg}
     </div>
     )
 }
