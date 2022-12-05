@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from "react";
 import {useParams } from 'react-router-dom'
 import axios from "axios";
-
+import "../styles/status.css"
 const Status=()=>{
 
     const {id} = useParams()
@@ -34,8 +34,11 @@ const Status=()=>{
     },[])
 
     return(
-    <div>
+    
+    <div className="stat__cont">
+       <div className="stat__text">
        {msg}
+       </div>
     </div>
     )
 }
