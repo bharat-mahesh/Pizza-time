@@ -6,6 +6,7 @@ import Helmet from "../components/Helmet/Helmet";
 
 import "../styles/checkout.css";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Checkout = () => {
   const [enterName, setEnterName] = useState("");
@@ -44,9 +45,8 @@ const Checkout = () => {
       billAmount:totalAmount
     };
 
-    await axios.post("http://localhost:5000/checkout",userShippingAddress).then(()=>{
-      console.log(cartItems);
-    })
+    const data=await axios.post("http://localhost:5000/checkout",userShippingAddress)
+    window.location = `/status/${data.data._id}`
   };
 
   return (
@@ -100,7 +100,7 @@ const Checkout = () => {
                   />
                 </div>
                 <button type="submit" className="addTOCart__btn" >
-                  Payment
+                  Confirm order
                 </button>
               </form>
             </Col>

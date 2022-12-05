@@ -10,6 +10,7 @@ import Contact from "../pages/Contact";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Admin from "../pages/admin";
+import Status from "../pages/status";
 
 const Routers = () => {
   return (
@@ -24,6 +25,7 @@ const Routers = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/admin" element={<Admin />} />
+      <Route path="/status/:id" element={<Status/>}/>
     </Routes>
   );
 };
