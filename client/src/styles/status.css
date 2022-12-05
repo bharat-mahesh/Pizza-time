@@ -1,0 +1,9 @@
+.stat__cont{
+margin-left: 40%;
+}
+.stat__text {
+    color: rgb(7, 7, 7);
+    line-height: 50px;
+    font-size: 30px;
+    font-family: "RocknRoll One", Times, serif;
+  }
